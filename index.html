@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Darsligi | Masterclass</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000;
+            color: #fff;
+            scroll-behavior: smooth;
+        }
+
+        .vercel-gradient {
+            background: linear-gradient(180deg, #fff 0%, #adadad 100%);
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .code-container {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 8px;
+        }
+
+        .nav-blur {
+            backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.8);
+            border-bottom: 1px solid #333;
+        }
+
+        .sidebar-link {
+            transition: all 0.2s ease;
+            border-left: 2px solid transparent;
+        }
+
+        .sidebar-link:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar-link.active {
+            border-left-color: #fff;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .lesson-card {
+            border: 1px solid #222;
+            transition: border-color 0.3s ease;
+        }
+
+        .lesson-card:hover {
+            border-color: #555;
+        }
+
+        .copy-btn {
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .code-container:hover .copy-btn {
+            opacity: 1;
+        }
+
+        .step-number {
+            background: #fff;
+            color: #000;
+            width: 24px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="selection:bg-white selection:text-black">
+
+    <!-- Navigatsiya -->
+    <nav class="fixed top-0 w-full z-50 nav-blur">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <a href="#" class="text-xl font-bold tracking-tighter">FLASK<span class="text-gray-500 font-light ml-2">ACADEMY</span></a>
+            </div>
+            <div class="flex items-center space-x-6 text-sm">
+                <span class="text-gray-500 hidden sm:inline">Kurs holati: <span class="text-green-500">Bepul</span></span>
+                <button class="bg-white text-black px-4 py-1.5 rounded-md font-medium hover:bg-gray-200 transition">
+                    Sertifikat olish
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-6 pt-24 pb-20 flex flex-col md:flex-row gap-12">
+        
+        <!-- Sidebar Menyu -->
+        <aside class="w-full md:w-64 shrink-0 h-fit sticky top-24">
+            <p class="text-xs uppercase tracking-widest text-gray-500 font-semibold mb-4">Mundarija</p>
+            <nav class="flex flex-col space-y-1">
+                <a href="#intro" class="sidebar-link active block py-2 px-4 text-sm text-gray-400 rounded-r-md">1. Kirish</a>
+                <a href="#install" class="sidebar-link block py-2 px-4 text-sm text-gray-400 rounded-r-md">2. O'rnatish</a>
+                <a href="#first-app" class="sidebar-link block py-2 px-4 text-sm text-gray-400 rounded-r-md">3. Birinchi ilova</a>
+                <a href="#routing" class="sidebar-link block py-2 px-4 text-sm text-gray-400 rounded-r-md">4. Routing tizimi</a>
+                <a href="#templates" class="sidebar-link block py-2 px-4 text-sm text-gray-400 rounded-r-md">5. HTML Shablonlar</a>
+                <a href="#next-steps" class="sidebar-link block py-2 px-4 text-sm text-gray-400 rounded-r-md">6. Keyingi qadamlar</a>
+            </nav>
+        </aside>
+
+        <!-- Asosiy Kontent -->
+        <main class="flex-1 max-w-3xl">
+            
+            <!-- Kirish -->
+            <section id="intro" class="mb-20">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 vercel-gradient">Flask bilan Backend dunyosiga kiring</h1>
+                <p class="text-lg text-gray-400 leading-relaxed mb-6">
+                    Flask — bu Python tilida yozilgan eng mashhur veb-microframework. U yengil, tez va o'rganish uchun juda qulay. Agar siz veb-dasturlashni endi boshlayotgan bo'lsangiz, Flask siz uchun eng to'g'ri tanlovdir.
+                </p>
+                <div class="bg-blue-500/10 border border-blue-500/20 p-4 rounded-lg flex items-start space-x-4">
+                    <i class="fas fa-info-circle mt-1 text-blue-400"></i>
+                    <p class="text-sm text-blue-100">Bu darslik sizga Flaskning asosiy poydevorini 15 daqiqa ichida o'rgatish uchun mo'ljallangan.</p>
+                </div>
+            </section>
+
+            <!-- O'rnatish -->
+            <section id="install" class="mb-20">
+                <div class="flex items-center space-x-3 mb-6">
+                    <span class="step-number">2</span>
+                    <h2 class="text-2xl font-bold italic tracking-tight">Muhitni sozlash va o'rnatish</h2>
+                </div>
+                <p class="text-gray-400 mb-6">
+                    Avval virtual muhit (virtual environment) yarating, so'ngra Flaskni terminal orqali o'rnating:
+                </p>
+                <div class="code-container p-5 font-mono text-sm mb-4 relative group">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-gray-600">terminal</span>
+                        <button onclick="copyText('pip install flask')" class="copy-btn text-xs text-gray-500 hover:text-white">Nusxa</button>
+                    </div>
+                    <code class="text-green-400">pip install flask</code>
+                </div>
+            </section>
+
+            <!-- Birinchi ilova -->
+            <section id="first-app" class="mb-20">
+                <div class="flex items-center space-x-3 mb-6">
+                    <span class="step-number">3</span>
+                    <h2 class="text-2xl font-bold italic tracking-tight">Sizning birinchi "Hello World"ingiz</h2>
+                </div>
+                <p class="text-gray-400 mb-6">
+                    Yangi <code class="text-white px-1 bg-white/10 rounded">app.py</code> faylini oching va quyidagi kodni kiriting:
+                </p>
+                <div class="code-container p-6 font-mono text-sm leading-relaxed overflow-x-auto shadow-2xl group">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-gray-500">app.py</span>
+                        <button onclick="copyCode()" class="copy-btn text-xs text-gray-500 hover:text-white">Koddan nusxa olish</button>
+                    </div>
+                    <pre><span class="text-pink-500">from</span> flask <span class="text-pink-500">import</span> Flask
+
+app = Flask(__name__)
+
+<span class="text-blue-400">@app.route</span>(<span class="text-green-400">"/"</span>)
+<span class="text-pink-500">def</span> <span class="text-yellow-300">index</span>():
+    <span class="text-pink-500">return</span> <span class="text-green-400">"Salom, Flask darslariga xush kelibsiz!"</span>
+
+<span class="text-pink-500">if</span> __name__ == <span class="text-green-400">"__main__"</span>:
+    app.run(debug=<span class="text-blue-400">True</span>)</pre>
+                </div>
+                <div class="mt-6 p-5 border border-white/10 rounded-xl bg-white/[0.02]">
+                    <h4 class="text-sm font-semibold mb-2 flex items-center"><i class="fas fa-lightbulb text-yellow-400 mr-2"></i> Bu nima qiladi?</h4>
+                    <ul class="text-sm text-gray-400 space-y-2 list-disc pl-5 leading-relaxed">
+                        <li><code class="text-white">Flask(__name__)</code> - ilovaning asosiy ob'ektini yaratadi.</li>
+                        <li><code class="text-white">@app.route("/")</code> - foydalanuvchi asosiy sahifaga kirganini nazorat qiladi.</li>
+                        <li><code class="text-white">debug=True</code> - kodni o'zgartirganda server o'zi yangilanishini ta'minlaydi.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Routing -->
+            <section id="routing" class="mb-20">
+                <div class="flex items-center space-x-3 mb-6">
+                    <span class="step-number">4</span>
+                    <h2 class="text-2xl font-bold italic tracking-tight">Dinamik Routing (Yo'naltirish)</h2>
+                </div>
+                <p class="text-gray-400 mb-6">
+                    URL orqali ma'lumot qabul qilish juda oson:
+                </p>
+                <div class="code-container p-6 font-mono text-sm leading-relaxed mb-6">
+                    <pre><span class="text-blue-400">@app.route</span>(<span class="text-green-400">"/user/&lt;name&gt;"</span>)
+<span class="text-pink-500">def</span> <span class="text-yellow-300">greet</span>(name):
+    <span class="text-pink-500">return</span> f<span class="text-green-400">"Salom, {name}!"</span></pre>
+                </div>
+            </section>
+
+            <!-- Final Section -->
+            <section id="next-steps" class="py-12 border-t border-white/10 text-center">
+                <h2 class="text-3xl font-bold mb-4">Tayyormisiz?</h2>
+                <p class="text-gray-400 mb-8">Flaskning barcha imkoniyatlarini o'rganish uchun to'liq hujjatlar bilan tanishib chiqing.</p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#" class="bg-white text-black px-8 py-3 rounded-md font-bold hover:bg-gray-200 transition">Testdan o'tish</a>
+                    <a href="#" class="border border-white/10 px-8 py-3 rounded-md font-bold hover:bg-white/10 transition">PDF darslikni yuklash</a>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 py-10">
+        <div class="max-w-7xl mx-auto px-6 text-center text-gray-500 text-xs">
+            <p class="mb-2 italic">Dasturlashni oddiylik bilan boshlang.</p>
+            <p>&copy; 2024 Flask Academy. Created with passion for Pythonistas.</p>
+        </div>
+    </footer>
+
+    <script>
+        function copyText(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            
+            // Notification logic (optional)
+        }
+
+        function copyCode() {
+            const code = `from flask import Flask\n\napp = Flask(__name__)\n\n@app.route("/")\ndef index():\n    return "Salom, Flask darslariga xush kelibsiz!"\n\nif __name__ == "__main__":\n    app.run(debug=True)`;
+            copyText(code);
+            alert("Kod nusxalandi!");
+        }
+
+        // Sidebar active link tracker
+        window.addEventListener('scroll', () => {
+            const sections = ['intro', 'install', 'first-app', 'routing', 'templates', 'next-steps'];
+            let current = '';
+
+            sections.forEach(section => {
+                const element = document.getElementById(section);
+                if (element) {
+                    const sectionTop = element.offsetTop;
+                    if (pageYOffset >= sectionTop - 100) {
+                        current = section;
+                    }
+                }
+            });
+
+            document.querySelectorAll('.sidebar-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
